@@ -11,7 +11,7 @@
 typedef void (^FlipBoardNavigationControllerCompletionBlock)(void);
 
 @interface FlipBoardNavigationController : UIViewController
-
+@property (nonatomic) BOOL shouldAddGesture;
 @property(nonatomic, retain) NSMutableArray *viewControllers;
 
 - (id) initWithRootViewController:(UIViewController*)rootViewController;
@@ -20,6 +20,8 @@ typedef void (^FlipBoardNavigationControllerCompletionBlock)(void);
 - (void) pushViewController:(UIViewController *)viewController completion:(FlipBoardNavigationControllerCompletionBlock)handler;
 - (void) popViewController;
 - (void) popViewControllerWithCompletion:(FlipBoardNavigationControllerCompletionBlock)handler;
+
+-(BOOL)hasParentViewController;
 @end
 
 @interface UIViewController (FlipBoardNavigationController)

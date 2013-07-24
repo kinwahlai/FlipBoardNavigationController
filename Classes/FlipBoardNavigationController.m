@@ -47,6 +47,7 @@ typedef enum {
 - (id) initWithRootViewController:(UIViewController*)rootViewController {
     if (self = [super init]) {
         self.viewControllers = [NSMutableArray arrayWithObject:rootViewController];
+        self.shouldAddGesture = YES;
     }
     return self;
 }
@@ -102,7 +103,8 @@ typedef enum {
             [viewController didMoveToParentViewController:self];
             _animationInProgress = NO;
             _gestures = [[NSMutableArray alloc] init];
-            [self addPanGestureToView:[self currentViewController].view];
+            if (self.shouldAddGesture)
+                [self addPanGestureToView:[self currentViewController].view];
             handler();
         }
     }];
@@ -317,6 +319,14 @@ typedef enum {
     }
 }
 
+#pragma mark -
+#pragma mark Customization, hasParentViewController meaning this is not the root view controller
+-(BOOL)hasParentViewController
+{
+    UIViewController *instance =[self previousViewController];
+    return instance == nil? NO : YES;
+}
+
 @end
 
 
@@ -341,6 +351,4 @@ typedef enum {
     }
     
 }
-
-
 @end
