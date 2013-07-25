@@ -48,6 +48,7 @@ typedef enum {
     if (self = [super init]) {
         self.viewControllers = [NSMutableArray arrayWithObject:rootViewController];
         self.shouldAddGesture = YES;
+        self.shouldShowBackButton = NO;
     }
     return self;
 }
@@ -103,6 +104,7 @@ typedef enum {
             [viewController didMoveToParentViewController:self];
             _animationInProgress = NO;
             _gestures = [[NSMutableArray alloc] init];
+            [self addBackButton:[self currentViewController].view];
             if (self.shouldAddGesture)
                 [self addPanGestureToView:[self currentViewController].view];
             handler();
@@ -325,6 +327,26 @@ typedef enum {
 {
     UIViewController *instance =[self previousViewController];
     return instance == nil? NO : YES;
+}
+
+-(void)addBackButton:(UIView*)targetView
+{
+    if (self.shouldShowBackButton) {
+        UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [backButton.titleLabel setFont:[UIFont boldSystemFontOfSize:12.]];
+        [backButton setTitle:@"Back" forState:UIControlStateNormal];
+        [backButton setFrame:CGRectMake(20, 20, 50, 30)];
+        [backButton setHighlighted:YES];
+        [backButton addTarget:self action:@selector(popViewController) forControlEvents:UIControlEventTouchUpInside];
+        [backButton.layer setMasksToBounds:YES];
+        [backButton.layer setCornerRadius:4.0];
+        [backButton.layer setBorderWidth:1.0];
+        CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+        CGColorRef colorref = CGColorCreate(colorSpace,(CGFloat[]){ 1, 1, 1, 1 });
+        [backButton.layer setBorderColor:colorref];
+        backButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
+        [targetView addSubview:backButton];
+    }
 }
 
 @end

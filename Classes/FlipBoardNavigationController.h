@@ -12,6 +12,7 @@ typedef void (^FlipBoardNavigationControllerCompletionBlock)(void);
 
 @interface FlipBoardNavigationController : UIViewController
 @property (nonatomic) BOOL shouldAddGesture;
+@property (nonatomic) BOOL shouldShowBackButton;
 @property(nonatomic, retain) NSMutableArray *viewControllers;
 
 - (id) initWithRootViewController:(UIViewController*)rootViewController;
