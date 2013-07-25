@@ -70,7 +70,7 @@ typedef enum {
    
     UIView * rootView = rootViewController.view;
     rootView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-    rootView.frame = viewRect;
+//    rootView.frame = viewRect; // force view into a certain rect will have the black bar appear
     [self.view addSubview:rootView];
     
     [rootViewController didMoveToParentViewController:self];
